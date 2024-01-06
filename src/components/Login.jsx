@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
   const navigate = useNavigate();
@@ -24,8 +24,8 @@ function Login() {
         </div>
       </form>
       <footer>
-        <a className="float-left text-sm text-indigo-700 hover:text-pink-700" href="#">Forgot Password?</a>
-        <a className="float-right text-sm text-indigo-700 hover:text-pink-700" href="#">Register</a>
+      <Link className="float-right text-sm text-indigo-700 hover:text-pink-700 hover:underline " to='/register'>New User ?</Link>
+        <a  href="#"></a>
       </footer>
     {/* </div> */}
   </div>

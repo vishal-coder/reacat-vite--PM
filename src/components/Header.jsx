@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 function Header() {
   const navigate = useNavigate();
@@ -7,7 +7,8 @@ function Header() {
     <div>
     <nav className="relative flex w-full flex-wrap items-center justify-between bg-indigo-700 py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 lg:py-4 mt-0">
       <div className="flex w-full flex-wrap items-center justify-between px-3">
-        <div className="ml-2 w-[30%] text-xl text-neutral-800 dark:text-neutral-200  hover:text-pink-700 cursor-pointer" href="#">Home</div>
+        <div className="ml-2 w-[30%] text-xl text-neutral-800 dark:text-neutral-200  hover:text-pink-700 cursor-pointer" >
+          <Link to='/'>Home</Link></div>
         <div className="ml-2 flex flex-grow items-center justify-around text-xl" href="#">
           <NavLink  to={"project"}className={({isActive})=>`ml-2 text-xl  ${isActive ? "text-pink-700" : "dark:text-neutral-200"}`} href="#">View Project</NavLink>
           <NavLink  to={"add"}className={({isActive})=>`ml-2 text-xl  ${isActive ? "text-pink-700" : "dark:text-neutral-200"}`} href="#">Add Project</NavLink>
