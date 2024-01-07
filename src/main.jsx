@@ -12,14 +12,17 @@ import AddProject from './components/AddProject.jsx'
 import DeleteProject from './components/DeleteProject.jsx'
 import NoMatch from './components/NoMatch.jsx'
 import UpdateProject from './components/UpdateProject.jsx'
+import Home from './components/Home.jsx'
+import ProjectDetails from './components/ProjectDetails.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route  path='/' element ={ <Layout/> }>
+      <Route index element={<Home />} /> {/* Render Home component at root path */}
       <Route  path='login' element ={ <Login/> }/>
       <Route  path='register' element ={ <Register/> }/>
       <Route  path='project/' element ={ <Project/> }>       
-        <Route  path=':id' element ={ <Project/> }/>
+        <Route  path=':id' element ={ <ProjectDetails/> }/>
       </Route>
       <Route  path='add' element ={ <AddProject/> }/>
       <Route  path='delete' element ={ <DeleteProject/> }/>

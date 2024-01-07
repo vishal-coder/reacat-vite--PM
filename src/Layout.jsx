@@ -11,7 +11,7 @@ function Layout() {
         <div className="flex-item">
           <div className="inner-flex-item"><Header /></div>
         </div>
-        <div className=" flex flex-item flex-1 overflow-auto">
+        <div className=" flex flex-item flex-1 overflow-auto max-h-full">
           < ><Outlet /></>
         </div>
         <div className="flex-item ">

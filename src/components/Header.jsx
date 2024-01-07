@@ -10,10 +10,10 @@ function Header() {
         <div className="ml-2 w-[30%] text-xl text-neutral-800 dark:text-neutral-200  hover:text-pink-700 cursor-pointer" >
           <Link to='/'>Home</Link></div>
         <div className="ml-2 flex flex-grow items-center justify-around text-xl" href="#">
-          <NavLink  to={"project"}className={({isActive})=>`ml-2 text-xl  ${isActive ? "text-pink-700" : "dark:text-neutral-200"}`} href="#">View Project</NavLink>
-          <NavLink  to={"add"}className={({isActive})=>`ml-2 text-xl  ${isActive ? "text-pink-700" : "dark:text-neutral-200"}`} href="#">Add Project</NavLink>
-          <NavLink to={"update"} className={({isActive})=>`ml-2 text-xl ${isActive ? "text-pink-700": "dark:text-neutral-200"}`} href="#">Update Project</NavLink>
-          <NavLink to={"delete"} className={({isActive})=>`ml-2 text-xl ${isActive ? "text-pink-700": "dark:text-neutral-200"}`} href="#">Delete Project</NavLink>
+          <NavLink  to={"project"}className={({isActive})=>`ml-2 text-xl  ${isActive ? "text-pink-700" : "dark:text-neutral-200"} hover:text-pink-700 `} href="#">View Project</NavLink>
+          <NavLink  to={"add"}className={({isActive})=>`ml-2 text-xl  ${isActive ? "text-pink-700" : "dark:text-neutral-200"} hover:text-pink-700 `} href="#">Add Project</NavLink>
+          <NavLink to={"update"} className={({isActive})=>`ml-2 text-xl ${isActive ? "text-pink-700": "dark:text-neutral-200"} hover:text-pink-700 `} href="#">Update Project</NavLink>
+          <NavLink to={"delete"} className={({isActive})=>`ml-2 text-xl ${isActive ? "text-pink-700": "dark:text-neutral-200"} hover:text-pink-700 `} href="#">Delete Project</NavLink>
         </div>
         <div className="ml-5 flex w-[30%] items-center justify-end pr-10">
           <button className="mr-4 rounded-lg bg-blue-600 px-6 py-2 text-white hover:bg-pink-700" onClick={()=>navigate("/login")}>Login</button>

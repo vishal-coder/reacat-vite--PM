@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 function Register() {
   const navigate = useNavigate();
   return (
-    <div className=" my-3 min-w-fit w-full max-w-xs rounded bg-indigo-100 p-5  flex min-h-full  flex-col  m-auto justify-center items-center"> 
+    <div className=" my-2 min-w-fit w-full max-w-xs rounded bg-indigo-100  flex min-h-full  flex-col  m-auto justify-center items-center"> 
     <div class="m-auto w-full max-w-xs rounded bg-indigo-100 p-5">
     <div>
         <label class="mb-2 block text-center text-2xl" htmlFor="username">Register Here</label>
