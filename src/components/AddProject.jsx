@@ -1,29 +1,94 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import useFetch from "../services/UseFecth";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { addprojectToList } from "../features/projectSlice";
 
 function AddProject() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  return (
-    <div className=" w-2/6 rounded bg-indigo-100 p-5  flex min-h-full  flex-col  m-auto justify-center items-center"> 
-    {/* <div className="m-auto w-full max-w-xs rounded bg-indigo-100 p-5"> */}
-    <div>
-        <label className="mb-2 block text-center text-2xl" htmlFor="username">Please Enter Your Project Name</label>
-      </div>
-      <form className='w-full flex justify-center items-center flex-col'>
-        <div className=' w-full text-center'>
-          
-          <input className=" m-auto text-center mt-5 mb-6 w-4/6 border-b-2 border-indigo-500 p-2 outline-none focus:bg-indigo-200" type="text" name="name" />
-        </div>       
-        <div className='w-full text-center'>
-          <button className="mb-6 w-2/6  rounded bg-teal-500 hover:bg-teal-600 px-4 py-2 font-bold text-white ">Add</button>
 
+  const { data, isLoading, err, fetchData } = useFetch();
+  const [projectName, setProjectName] = useState(null);
+  const { userToken } = useSelector((state) => state.auth);
+  const { projectList } = useSelector((state) => state.project);
+
+  if (!userToken) {
+    navigate("/");
+  }
+  console.log(projectName);
+
+  const addProject = async (e) => {
+    e.preventDefault();
+    try {
+      if (!projectName) {
+        toast.warning("Please Enter Project Name");
+        return;
+      }
+     
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: projectName }),
+      };
+      setProjectName((prev)=> prev = "");
+      await fetchData("project", requestOptions);
+      console.log("fetch call successfull");
+    } catch (err) {
+      if (err) {
+        console.log("err", err);
+        setErrors(errors);
+      }
+    }
+  };
+  useEffect(() => {
+    if (err) {
+      const jsonData = JSON.parse(err.message);
+      toast.error(jsonData.message);
+    }
+
+    if (data) {
+      console.log("data-=-data.length == 0", data.length == 0);
+      console.log("data-=-data", data);
+      dispatch(addprojectToList(data));
+      toast.success("Project Added Successfully");
+    }
+  }, [data, err]);
+  console.log("Store redux projectList ", projectList);
+  return (
+    <div className=" w-2/6 rounded bg-indigo-100 p-5  flex min-h-full  flex-col  m-auto justify-center items-center">
+      <div>
+        <label className="mb-2 block text-center text-2xl" htmlFor="username">
+          Please Enter Your Project Name
+        </label>
+      </div>
+      <form className="w-full flex justify-center items-center flex-col">
+        <div className=" w-full text-center">
+          <input
+            className=" m-auto text-center mt-5 mb-6 w-4/6 border-b-2 border-indigo-500 p-2 outline-none focus:bg-indigo-200"
+            type="text"
+            name="name"
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
+          />
+        </div>
+        <div className="w-full text-center">
+          <button
+            className="mb-6 w-2/6  rounded bg-teal-500 hover:bg-teal-600 px-4 py-2 font-bold text-white "
+            onClick={(e) => addProject(e)}
+          >
+            Add
+          </button>
         </div>
       </form>
-     
-     
-    {/* </div> */}
-  </div>
-  
-  )
+
+      {/* </div> */}
+    </div>
+  );
 }
-export default AddProject
+export default AddProject;

@@ -22,6 +22,7 @@ import UpdateProject from "./components/UpdateProject.jsx";
 import Home from "./components/Home.jsx";
 import ProjectDetails from "./components/ProjectDetails.jsx";
 import "react-toastify/dist/ReactToastify.css";
+import PrivateRoute from "./components/PrivateRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,12 +35,36 @@ const router = createBrowserRouter(
         element={<Register />}
         errorElement={<ErrorBoundary />}
       />
-      <Route path="project/" element={<Project />}>
-        <Route path=":id" element={<ProjectDetails />} />
+      <Route
+        path="project/"
+        element={
+          <PrivateRoute>
+            <Project />
+          </PrivateRoute>
+        }
+        errorElement={<ErrorBoundary />}
+      >
+        <Route
+          path=":id"
+          element={<ProjectDetails />}
+          errorElement={<ErrorBoundary />}
+        />
       </Route>
-      <Route path="add" element={<AddProject />} />
-      <Route path="delete" element={<DeleteProject />} />
-      <Route path="update" element={<UpdateProject />} />
+      <Route
+        path="add"
+        element={<AddProject />}
+        errorElement={<ErrorBoundary />}
+      />
+      <Route
+        path="delete"
+        element={<DeleteProject />}
+        errorElement={<ErrorBoundary />}
+      />
+      <Route
+        path="update"
+        element={<UpdateProject />}
+        errorElement={<ErrorBoundary />}
+      />
       <Route path="*" element={<NoMatch />} />
     </Route>
   )
