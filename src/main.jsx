@@ -52,7 +52,11 @@ const router = createBrowserRouter(
       </Route>
       <Route
         path="add"
-        element={<AddProject />}
+        element={
+          <PrivateRoute>
+            <AddProject />
+          </PrivateRoute>
+        }
         errorElement={<ErrorBoundary />}
       />
       <Route

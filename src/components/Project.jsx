@@ -38,6 +38,27 @@ function Project() {
       }
     }
   };
+
+  const handleDeleteProject = async (id) => {
+    try {
+      alert(id)
+      console.log("id", id)
+      const requestOptions = {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+        // body: formBody,
+      };
+      await fetchData(`project/${id}`, requestOptions);
+      console.log("fetch call successfull");
+    } catch (err) {
+      if (err) {
+        console.log("err", err);
+        setErrors(errors);
+      }
+    }
+  };
   useEffect(() => {
     if (err) {
       const jsonData = JSON.parse(err.message);
@@ -47,9 +68,13 @@ function Project() {
     if (data) {
       console.log("data-=-data.length == 0", data.length == 0);
       console.log("data-=-data", data);
-      setProjects(data);
-      toast.success("Logged in Successfully");
-      dispatch(setprojectList(data));
+      console.log("data && data.length > 0", data && data.length > 0);
+
+      if(data && data.length > 0){
+        setProjects(data);
+        dispatch(setprojectList(data));
+      }
+
     }
   }, [data, err]);
   useEffect(() => {
@@ -75,25 +100,14 @@ function Project() {
           </h1>
         </div>
         {Array.isArray(data) && data.length == 0 && (
-          <p>
+          <p className="text-center">
             No project found. Please try{" "}
             <Link className="text-blue-400" to="/add">
               adding one
             </Link>
           </p>
         )}
-        {/* <form className="w-full max-w-sm mx-auto px-4 py-2">
-    <div className="flex items-center border-b-2 border-teal-500 py-2">
-        <input
-            className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-            type="text" placeholder="Add a task"/>
-        <button
-            className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-            type="button">
-            Add
-        </button>
-    </div>
-</form> */}
+   
         <ul className=" px-4 overflow-y-scroll max-h-96 mt-2 border-t-2 border-indigo-500">
           {projects &&
             projects.map((item) => {
@@ -101,7 +115,7 @@ function Project() {
                 <li  key = {item.id}className ={`py-4 px-2 border-b-2 border-indigo-200 ${item.is_completed && "bg-green-400"}`} >
                   <div className="flex items-center">
                     <div className=" w-full text-gray-900 flex ">
-                      <div className=" text-blue-400  ">
+                      <div className=" text-blue-400  cursor-pointer ">
                         <span>
                           {" "}
                           <svg
@@ -114,7 +128,7 @@ function Project() {
                             <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
                           </svg>{" "} </span>
                           </div>
-                      <div className=" text-red-600 pl-2">
+                      {/* <div className=" text-red-600 pl-2  cursor-pointer" onClick={(e)=> handleDeleteProject(item.id)}>
                        
                         <span className=" text-red-600">
                           {" "}
@@ -131,7 +145,7 @@ function Project() {
                             />
                           </svg>
                         </span>
-                      </div>
+                      </div> */}
                       <div className="text-lg font-medium ml-2 hover:text-pink-500 flex flex-item flex-1">
                         {" "}
                         <Link to={`/project/${item}`}> {item.name}</Link>

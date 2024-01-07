@@ -10,7 +10,7 @@ function AddProject() {
   const navigate = useNavigate();
 
   const { data, isLoading, err, fetchData } = useFetch();
-  const [projectName, setProjectName] = useState(null);
+  const [projectName, setProjectName] = useState("");
   const { userToken } = useSelector((state) => state.auth);
   const { projectList } = useSelector((state) => state.project);
 
