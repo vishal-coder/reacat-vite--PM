@@ -13,18 +13,20 @@ const projectSlice = createSlice({
       state.projectList = [...state.projectList, action.payload];
     },
     deleteProjectFromList: (state, action) => {
-        console.log("action.payload in delete", action.payload)
         const editedList = state.projectList.filter(function (item) {
             return item.id != action.payload ? item : null ;
           });
-          console.log("editedListin delete", editedList)
+         
           state.projectList = [...editedList];
     },
-    addEditedproject: (state, action) => {
-      const editedList = state.projectList.map(function (item) {
-        return item._id == action.payload._id ? action.payload : item;
-      });
-      state.projectList = editedList;
+    updateProjectStatus: (state, action) => {
+        const newlist = state.projectList.map((item) => {
+            if (item.id == action.payload) {
+              return {...item, is_completed: true};
+            }
+            return item;
+          });        
+          state.projectList = [...newlist];
     },
   },
 });
@@ -36,5 +38,6 @@ export const {
   addprojectToList,
   addNewproject,
   addEditedproject,
-  deleteProjectFromList
+  deleteProjectFromList,
+  updateProjectStatus
 } = projectSlice.actions;

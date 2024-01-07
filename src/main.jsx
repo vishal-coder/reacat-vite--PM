@@ -61,12 +61,20 @@ const router = createBrowserRouter(
       />
       <Route
         path="delete"
-        element={<DeleteProject />}
+        element={
+          <PrivateRoute>
+            <DeleteProject />
+          </PrivateRoute>
+        }
         errorElement={<ErrorBoundary />}
       />
       <Route
         path="update"
-        element={<UpdateProject />}
+        element={
+          <PrivateRoute>
+            <UpdateProject />
+          </PrivateRoute>
+        }
         errorElement={<ErrorBoundary />}
       />
       <Route path="*" element={<NoMatch />} />

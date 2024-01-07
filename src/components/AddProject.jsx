@@ -17,7 +17,6 @@ function AddProject() {
   if (!userToken) {
     navigate("/");
   }
-  console.log(projectName);
 
   const addProject = async (e) => {
     e.preventDefault();
@@ -25,8 +24,7 @@ function AddProject() {
       if (!projectName) {
         toast.warning("Please Enter Project Name");
         return;
-      }
-     
+      }    
 
       const requestOptions = {
         method: "POST",
@@ -38,7 +36,6 @@ function AddProject() {
       };
       setProjectName((prev)=> prev = "");
       await fetchData("project", requestOptions);
-      console.log("fetch call successfull");
     } catch (err) {
       if (err) {
         console.log("err", err);
@@ -51,15 +48,11 @@ function AddProject() {
       const jsonData = JSON.parse(err.message);
       toast.error(jsonData.message);
     }
-
-    if (data) {
-      console.log("data-=-data.length == 0", data.length == 0);
-      console.log("data-=-data", data);
+    if (data) {      
       dispatch(addprojectToList(data));
       toast.success("Project Added Successfully");
     }
   }, [data, err]);
-  console.log("Store redux projectList ", projectList);
   return (
     <div className=" w-2/6 rounded bg-indigo-100 p-5  flex min-h-full  flex-col  m-auto justify-center items-center">
       <div>

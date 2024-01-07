@@ -14,32 +14,16 @@ function DeleteProject() {
   const { userToken } = useSelector((state) => state.auth);
   const { projectList } = useSelector((state) => state.project);
 
-  console.log(
-    "data, isLoading, err, fetchData ",
-    data,
-    isLoading,
-    err,
-    fetchData
-  );
-  console.log(
-    "dprojectList- projectList ",
-    projectList
-  );
-
   const handleDeleteProject = async (id) => {
     try {
-      alert(id)
-      console.log("id", id)
+    
       const requestOptions = {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
-        // body: formBody,
       };
-      await fetchData(`project/${id}`, requestOptions);
-     
-      console.log("fetch call successfull");
+      await fetchData(`project/${id}`, requestOptions);     
     } catch (err) {
       if (err) {
         console.log("err", err);
@@ -68,11 +52,11 @@ function DeleteProject() {
       <div className="max-w-md w-3/4 mx-auto bg-white shadow-lg rounded-lg mt-6 max-h-full  overflow-hidden">
         <div className="px-4  ">
           <h1 className="text-gray-800 font-bold text-2xl uppercase text-center ">
-            Project Task List
+            Project  List
           </h1>
         </div>
         {Array.isArray(projectList) && projectList.length == 0 && (
-          <p>
+          <p className="text-center">
             No project found. Please try{" "}
             <Link className="text-blue-400" to="/add">
               adding one

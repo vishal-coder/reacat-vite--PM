@@ -31,17 +31,13 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    console.log("handleSubmit");
-
     try {
       await validationSchema.validate(formData, { abortEarly: false });
-      console.log("validation successfull", formData);
       const formBody = Object.keys(formData)
         .map(
           (key) =>
             encodeURIComponent(key) + "=" + encodeURIComponent(formData[key])
-        )
-        .join("&");
+        ).join("&");
 
       const requestOptions = {
         method: "POST",
@@ -49,7 +45,6 @@ function Login() {
         body: formBody,
       };
       await fetchData("user/login", requestOptions);
-      console.log("fetch call successfull");
     } catch (err) {
       if (err) {
         console.log("err", err);
@@ -64,10 +59,8 @@ function Login() {
 
   useEffect(() => {
     if (data) {
-      console.log("data-=-data",data)
       dispatch(setUserToken(data.access_token));
       dispatch(setIsLoggedIn(true));
-
       toast.success("Logged in Successfully");
       navigate("/project");
     }
