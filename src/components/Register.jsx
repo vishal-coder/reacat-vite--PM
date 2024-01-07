@@ -6,7 +6,7 @@ import useFetch from "../services/UseFecth";
 import { toast } from "react-toastify";
 
 function Register() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     designation: "",
@@ -15,20 +15,26 @@ function Register() {
     confirmpassword: "",
   });
   const [errors, setErrors] = useState({});
-  const { data, isLoading, err, fetchData } = useFetch()
-
+  const { data, isLoading, err, fetchData } = useFetch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({});
   };
- 
+
   const validationSchema = yup.object().shape({
     name: yup.string().required().min(2).max(20),
     designation: string().required().min(2).max(20),
     email: string().email().required(),
     password: string().required().min(6).max(15),
-    confirmpassword: string().required().min(6).max(15).oneOf([yup.ref('password'), null], 'Password and Confirm Password must match'),
+    confirmpassword: string()
+      .required()
+      .min(6)
+      .max(15)
+      .oneOf(
+        [yup.ref("password"), null],
+        "Password and Confirm Password must match"
+      ),
   });
 
   const handleSubmit = async (e) => {
@@ -37,57 +43,58 @@ function Register() {
 
     try {
       await validationSchema.validate(formData, { abortEarly: false }); // Validate all fields
-   const requestOptions = {
+      const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       };
 
-       await fetchData('user', requestOptions);
+      await fetchData("user", requestOptions);
       // const requestOptions = {
       //   method: "POST",
       //   headers: { "Content-Type": "application/json" },
       //   body: JSON.stringify(formData),
       // };
-  
+
       // const response = await fetch("http://localhost:8000/user", requestOptions);
       // const data = await response.json();
 
       // if (isLoading) return <div>Submitting...</div>;
       // if (error) return <div>Error: {error.message}</div>;
-      
-
     } catch (err) {
-      if(err){
+      if (err) {
         err.inner.forEach((error) => {
           errors[error.path] = error.message;
           setErrors({ ...errors, [error.path]: error.message });
-          });
-          setErrors(errors)
+        });
+        setErrors(errors);
       }
- 
     }
-    
-
 
     //  const { data, isLoading, error } = useFetch("user");
   }; //end of handlesubmit
 
   const handleReset = (e) => {
     e.preventDefault();
-    setFormData({ name: "", designation: "", email: "", password: "", confirmpassword: "" });
+    setFormData({
+      name: "",
+      designation: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+    });
     setErrors({}); // Clear errors
   };
   useEffect(() => {
-    if(data){
-      toast.success("You Have Registered Successfully")
-      toast.success("Please Login to continue")
-      navigate('/login')
+    if (data) {
+      toast.success("You Have Registered Successfully");
+      toast.success("Please Login to continue");
+      navigate("/login");
     }
 
-    if(err){
+    if (err) {
       const jsonData = JSON.parse(err.message);
-      toast.error(jsonData.message)
+      toast.error(jsonData.message);
     }
   }, [data, err]);
 
@@ -112,7 +119,7 @@ function Register() {
               value={formData.name}
               onChange={handleChange}
             />
-             {errors.name && <p className="text-red-600">{errors.name}</p>}
+            {errors.name && <p className="text-red-600">{errors.name}</p>}
           </div>
           <div>
             <label className="mb-2 block" htmlFor="designation">
@@ -126,7 +133,9 @@ function Register() {
               value={formData.designation}
               onChange={handleChange}
             />
-             {errors.designation && <p className="text-red-600">{errors.designation}</p>}
+            {errors.designation && (
+              <p className="text-red-600">{errors.designation}</p>
+            )}
           </div>
           <div>
             <label className="mb-2 block" htmlFor="email">
@@ -140,8 +149,7 @@ function Register() {
               value={formData.email}
               onChange={handleChange}
             />
-                         {errors.email && <p className="text-red-600">{errors.email}</p>}
-
+            {errors.email && <p className="text-red-600">{errors.email}</p>}
           </div>
           <div>
             <label className="mb-2 block" htmlFor="password">
@@ -155,8 +163,9 @@ function Register() {
               value={formData.password}
               onChange={handleChange}
             />
-                                     {errors.password && <p className="text-red-600">{errors.password}</p>}
-
+            {errors.password && (
+              <p className="text-red-600">{errors.password}</p>
+            )}
           </div>
           <div>
             <label className="mb-2 block" htmlFor="password">
@@ -170,8 +179,9 @@ function Register() {
               value={formData.confirmpassword}
               onChange={handleChange}
             />
-          {errors.confirmpassword && <p className="text-red-600">{errors.confirmpassword}</p>}
-
+            {errors.confirmpassword && (
+              <p className="text-red-600">{errors.confirmpassword}</p>
+            )}
           </div>
 
           <div className="flex justify-around ">
