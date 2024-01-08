@@ -92,9 +92,18 @@ function Register() {
       navigate("/login");
     }
 
-    if (err) {
-      const jsonData = JSON.parse(err.message);
-      toast.error(jsonData.message);
+    if (err) {      
+      try {
+        const jsonData = JSON.parse(err.message);
+        toast.warning(jsonData.message);
+        } catch (error) {
+          toast.error(err);
+          alert(err)
+         
+          console.log(err)
+          console.log(err.message)
+         
+        }
     }
   }, [data, err]);
 
